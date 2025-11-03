@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Data Collection</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>User Information</h1>
+        <p class="subtitle">Please enter your name and age</p>
+
+        <!-- API Status Section -->
+        <div class="status-section">
+          <h3>🔌 API Connection Status</h3>
+          <button
+            type="button"
+            id="testConnectionBtn"
+            class="btn btn-secondary"
+          >
+            🔌 Test API Connection
+          </button>
+          <div id="apiStatus" class="status-message"></div>
+        </div>
+
+        <hr />
+
+        <!-- User Data Form -->
+        <form id="userForm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              minlength="2"
+              maxlength="100"
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              required
+              min="1"
+              max="150"
+              placeholder="Enter your age"
+            />
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            Submit Data
+          </button>
+        </form>
+
+        <div id="responseMessage" class="message"></div>
+      </div>
+
+      <div class="info-box">
+        <h4>ℹ️ How to use:</h4>
+        <ol>
+          <li>Click "Test API Connection" to check if API is ready</li>
+          <li>Wait for green checkmark to appear</li>
+          <li>Fill in your name and age</li>
+          <li>Click "Submit Data" to send your information</li>
+        </ol>
+        <p>
+          <strong>Note:</strong> API endpoint is configured in Azure Static Web
+          App settings.
+        </p>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
