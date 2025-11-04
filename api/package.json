@@ -1,0 +1,11 @@
+{
+  "name": "name-age-app-api",
+  "version": "1.0.0",
+  "description": "Azure Functions API for Name-Age App configuration",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests specified\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
