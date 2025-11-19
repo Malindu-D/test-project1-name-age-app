@@ -37,6 +37,7 @@ First, get the URL of your deployed API Service App:
    ```
 
    **⚠️ Replace with YOUR actual API Service URL!**
+
    - NO trailing slash (/)
    - NO `/api/userdata` at the end
    - Just the base URL
@@ -99,17 +100,19 @@ name-age-app/
 ### **Key Files:**
 
 **`api/config/index.js`:**
+
 ```javascript
 module.exports = async function (context, req) {
   context.res = {
     status: 200,
     headers: { "Content-Type": "application/json" },
-    body: { apiEndpoint: process.env.API_ENDPOINT || "" }
+    body: { apiEndpoint: process.env.API_ENDPOINT || "" },
   };
 };
 ```
 
 **`staticwebapp.config.json`:**
+
 - Allows API routes
 - Configures CORS to allow connections to `*.azurewebsites.net`
 - Sets up security headers
@@ -119,31 +122,39 @@ module.exports = async function (context, req) {
 ## 🆘 Troubleshooting
 
 ### **Problem: Manual input field appears**
+
 **Cause:** `API_ENDPOINT` environment variable not configured or not loaded  
 **Solution:**
+
 1. Configure `API_ENDPOINT` in Azure Static Web App settings
 2. Hard refresh browser
 3. Check browser console for errors
 
 ### **Problem: Test connection fails (red error)**
+
 **Cause:** API Service not running or URL incorrect  
 **Solution:**
+
 1. Verify API Service is running in Azure Portal
 2. Test health endpoint directly: `https://your-api.azurewebsites.net/api/health`
 3. Check if URL in environment variable is correct (no typos)
 4. Verify CORS is enabled in API Service (already configured)
 
 ### **Problem: Submit data fails**
+
 **Cause:** Service Bus connection not configured in API Service  
 **Solution:**
+
 1. Go to API Service App in Azure Portal
 2. Check "Configuration" → "Application settings"
 3. Verify `AZURE_SERVICEBUS_CONNECTIONSTRING` exists and is not empty
 4. Verify `AZURE_SERVICEBUS_QUEUENAME` is set to `userdata-queue`
 
 ### **Problem: Config endpoint returns empty string**
+
 **Cause:** Environment variable not set in Azure  
 **Solution:**
+
 1. Go to Static Web App → Configuration
 2. Make sure `API_ENDPOINT` exists (exact name, case-sensitive)
 3. Save and wait for restart
@@ -153,11 +164,13 @@ module.exports = async function (context, req) {
 ## 📊 Environment Variables Summary
 
 ### **Static Web App (Name-Age App):**
+
 ```
 API_ENDPOINT = https://test-project-api-service.azurewebsites.net
 ```
 
 ### **App Service (API Service):**
+
 ```
 AZURE_SERVICEBUS_CONNECTIONSTRING = Endpoint=sb://...
 AZURE_SERVICEBUS_QUEUENAME = userdata-queue
