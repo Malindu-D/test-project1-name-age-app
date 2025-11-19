@@ -31,10 +31,13 @@ jobs:
           # 1. The Deployment Token (Secret)
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APP_API_KEY }}
 
-          # 2. Configuration for HTML/CSS/JS (no build step needed)
+          # 2. Deployment action
+          action: "upload"
+
+          # 3. Configuration for HTML/CSS/JS (no build step needed)
           # Location of the application code
           app_location: "/"
-          # Location of your Azure Functions API code (none for now)
+          # No API location - using separate Azure Functions app
           api_location: ""
           # Location of the built assets relative to app_location
           # For simple HTML/CSS/JS, this is typically the root itself
