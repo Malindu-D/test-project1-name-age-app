@@ -18,33 +18,42 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 async function loadConfig() {
     try {
+        console.log('Loading API endpoint from Azure configuration...');
+
         // Try to get API endpoint from Azure Static Web App configuration
         const configResponse = await fetch('/api/config');
         
         if (configResponse.ok) {
             const config = await configResponse.json();
+            console.log('Config loaded successfully');
+            
             API_ENDPOINT = config.apiEndpoint;
             
             if (API_ENDPOINT) {
-                console.log('API Endpoint loaded from Azure config:', API_ENDPOINT);
-                apiStatus.innerHTML = '<div class="status-message status-success"> API endpoint loaded from Azure configuration</div>';
+                console.log('✅ API Endpoint configured from Azure:', API_ENDPOINT);
+                apiStatus.innerHTML = '<div class="status-message status-success">✅ API endpoint loaded from Azure. Ready to test connection.</div>';
                 testConnectionBtn.disabled = false;
                 return;
+            } else {
+                console.error('❌ Environment variable not set in Azure');
+                apiStatus.innerHTML = '<div class="status-message status-error">❌ API endpoint not configured. Please set API_ENDPOINT in Azure Static Web App settings.</div>';
+                testConnectionBtn.disabled = true;
+                return;
             }
+        } else {
+            throw new Error(`Config endpoint returned status ${configResponse.status}`);
         }
-        
-        // If we reach here, Azure config not available (running locally)
-        console.log('Azure config not available - running locally');
-        apiStatus.innerHTML = '<div class="status-message status-warning"> Running locally. Please enter API endpoint manually below and test connection.</div>';
-        
-        // Create manual input for local testing
-        createManualApiInput();
-        
     } catch (error) {
-        console.error('Configuration load error:', error);
-        console.log('Falling back to manual input for local testing');
-        apiStatus.innerHTML = '<div class="status-message status-warning"> Running locally. Please enter API endpoint manually below and test connection.</div>';
-        createManualApiInput();
+        console.warn('⚠️ Azure config not available - using local development mode');
+        console.log('Error details:', error.message);
+        
+        // For local development - hardcode the endpoint
+        API_ENDPOINT = 'https://tst-tsh-terraform-dev-api-app.azurewebsites.net';
+        
+        apiStatus.innerHTML = '<div class="status-message status-warning">⚠️ Running in local development mode. Using default API endpoint.</div>';
+        testConnectionBtn.disabled = false;
+        
+        console.log('Local endpoint configured:', API_ENDPOINT);
     }
 }
 
